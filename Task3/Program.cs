@@ -21,7 +21,7 @@ namespace Task3
                 Console.WriteLine($"Ошибка {ex}");
             }
             var (deletedFilesCount, freeSpace) = CleanOldFilesAndFolders(folderPath);
-            Console.WriteLine($"Освобождено: {GetDirectorySize(folderPath)} байт");
+            Console.WriteLine($"Освобождено: {size} байт");
             Console.WriteLine($"Текущий размер папки: {freeSpace}");
         }
 
@@ -39,10 +39,11 @@ namespace Task3
 
                 if (currentTime -  lastAccessTime > expirationTime)
                 {
+                    long fileSize = GetDirectorySize(file);
                     File.Delete(file);
                     Console.WriteLine($"Удален файл: {file}");
                     deletedFilesCount++;
-                    freeSpace += new FileInfo(file).Length;
+                    freeSpace += fileSize;
                 }
             }
 
